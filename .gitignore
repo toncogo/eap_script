@@ -1,0 +1,7 @@
+# Arquivo de variáveis de ambiente com caminhos locais
+.env
+
+# Arquivos temporários e logs
+*.log
+*.disabled
+.DS_Store
