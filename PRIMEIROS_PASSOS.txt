@@ -1,0 +1,70 @@
+================================================================================
+                    🚁 EAP - CENTRAL DE COMANDO ARMA 3
+                 INSTRUÇÕES, REQUISITOS E RESOLUÇÃO DE ERROS
+================================================================================
+
+1. Configuração Obrigatória (.env)
+
+    O utilizador deve copiar o ficheiro de exemplo (cp .env.example .env) antes da primeira execução.
+
+    É obrigatório ajustar os caminhos aos diretórios reais da máquina:
+
+        LOCAL_DIR: Pasta de destino onde os mods serão descarregados (requer espaço livre considerável, normalmente 60GB+).
+
+        ARMA_DIR: Caminho absoluto da pasta de instalação do Arma 3 na biblioteca Steam.
+
+
+2. Compatibilidade e Plataforma de Testes
+
+    O ecossistema foi desenvolvido, configurado e homologado integralmente em Pop!_OS Linux.
+
+    Utiliza a camada de compatibilidade Valve Proton diretamente através do cliente Steam.
+
+
+3. Comportamento e Resolução de Alertas do Jogo
+
+    - Erros de Addons em falta (A3_Data_... / Oldman / Enoch_Loadorder):
+
+        Alertas esperados e normais caso o jogador não tenha a expansão Contact comprada.
+
+        Basta clicar em OK para ignorar e continuar; o menu principal e as missões carregam sem problemas.
+
+    - Aviso do SO (steam app 107410 is not responding):
+
+        Nunca selecionar Force Quit.
+
+        Clicar sempre em Wait (Aguardar), pois o Proton e o motor de jogo estão apenas a indexar grandes volumes de ficheiros PBO na memória.
+
+
+4. Gestão da DLC Contact (Enoch)
+Para quem NÃO possui a DLC:
+
+    Na Steam: Clicar com o botão direito em Arma 3 > Propriedades > DLC > desmarcar Arma 3 Contact.
+
+    No Terminal (raiz do jogo):
+    Bash
+
+    cd "$ARMA_DIR"
+    mv Expansion/Addons/data_f_oldman.pbo Expansion/Addons/data_f_oldman.pbo.disabled 2>/dev/null
+    mv Expansion/Addons/functions_f_oldman.pbo Expansion/Addons/functions_f_oldman.pbo.disabled 2>/dev/null
+    [ -d "Enoch" ] && mv Enoch Enoch.disabled 2>/dev/null
+    [ -d "Contact" ] && mv Contact Contact.disabled 2>/dev/null
+
+Para quem POSSUI a DLC (Restauração):
+
+    Na Steam: Aceder a Propriedades > DLC > marcar Arma 3 Contact e aguardar a transferência.
+
+    No Terminal (raiz do jogo):
+    Bash
+
+    cd "$ARMA_DIR"
+    mv Expansion/Addons/data_f_oldman.pbo.disabled Expansion/Addons/data_f_oldman.pbo 2>/dev/null
+    mv Expansion/Addons/functions_f_oldman.pbo.disabled Expansion/Addons/functions_f_oldman.pbo 2>/dev/null
+    [ -d "Enoch.disabled" ] && mv Enoch.disabled Enoch 2>/dev/null
+    [ -d "Contact.disabled" ] && mv Contact.disabled Contact 2>/dev/null
+
+
+5. Créditos
+
+    Desenvolvimento, automações em Bash com rclone, rotinas de compatibilidade Proton e documentação mantidos por Alyton Cogo para o esquadrão ArmaPoint.
+================================================================================
